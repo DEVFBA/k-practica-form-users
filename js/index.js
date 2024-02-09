@@ -30,12 +30,12 @@ const addUser = (event) => {
     const dataEmail = document.createElement('td');
     const dataDateOfBirth = document.createElement('td');
     const dataCodeEditor = document.createElement('td');
-    const dataActions = document.createElement('td');
 
     const btnDeleteRecord = document.createElement('button');
     btnDeleteRecord.setAttribute('class', 'btn btn-danger');
     btnDeleteRecord.innerHTML = 'Delete Record';
     
+    const id = Date.now();
     let usersCount = 0;
 
     if(localStorage.usersData){
@@ -49,10 +49,9 @@ const addUser = (event) => {
     dataEmail.innerHTML = email;
     dataDateOfBirth.innerHTML = dateOfBirth;
     dataCodeEditor.innerHTML = codeEditor;
-    //dataActions.innerHTML = 'Actions';
 
-    tableRow.setAttribute('id', `row-${usersCount + 1}`);
-    btnDeleteRecord.setAttribute('onclick', `deleteItem(${usersCount + 1})`);
+    tableRow.setAttribute('id', `row-${id}`);
+    btnDeleteRecord.setAttribute('onclick', `deleteItem(${id})`);
     tblUsers.append(tableRow);
     tableRow.append(dataName);
     tableRow.append(dataAge);
@@ -63,7 +62,7 @@ const addUser = (event) => {
 
 
     user = {
-        id: usersCount + 1,
+        id: id,
         name: name,
         age: age,
         email: email,
@@ -123,11 +122,25 @@ const printUsers = () => {
 
 }
 
-const deleteItem = (itemNumber) => {
+const deleteItem = (id) => {
 
-    const itemToDelete = document.getElementById(`row-${itemNumber}`);
+    const itemToDelete = document.getElementById(`row-${id}`);
 
     itemToDelete.remove();
+
+    /**
+     * Delete object from Local Storage
+     */
+
+    const usersData = JSON.parse(localStorage.usersData);
+    
+    const indexToDelete = usersData.users.findIndex((user) => {
+        return user.id === id;
+    });
+
+    usersData.users.splice(indexToDelete, 1);
+
+    localStorage.usersData = JSON.stringify(usersData);
 
 }
 
