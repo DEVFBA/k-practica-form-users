@@ -13,17 +13,23 @@ let data = {
     users: []
 }
 
-let user = [ ];
+//let user = [ ];
 
 const addUser = (event) => {
     event.preventDefault();
 
+    /**
+     * Recupero los valores del form
+     */
     const name = inputName.value;
     const age = inputAge.value;
     const email = inputEmail.value;
     const dateOfBirth = inputDateOfBirth.value;
     const codeEditor = selectCodeEditor.value;
 
+    /**
+     * Crear mis elementos de HTML (aun no los uso)
+     */
     const tableRow = document.createElement('tr');
     const dataName = document.createElement('td');
     const dataAge = document.createElement('td');
@@ -31,19 +37,28 @@ const addUser = (event) => {
     const dataDateOfBirth = document.createElement('td');
     const dataCodeEditor = document.createElement('td');
 
+    /**
+     * Creo el botón (aun no lo uso)
+     */
     const btnDeleteRecord = document.createElement('button');
     btnDeleteRecord.setAttribute('class', 'btn btn-danger');
     btnDeleteRecord.innerHTML = 'Delete Record';
     
+    /**
+     * Generar un id unico
+     */
     const id = Date.now();
-    let usersCount = 0;
+    // let usersCount = 0;
 
-    if(localStorage.usersData){
+    // if(localStorage.usersData){
 
-        usersCount = JSON.parse(localStorage.usersData).users.length;
+    //     usersCount = JSON.parse(localStorage.usersData).users.length;
 
-    }
+    // }
 
+    /**
+     * Asigno los valores recuperados del form a cada uno de mis elementos creados
+     */
     dataName.innerHTML = name;
     dataAge.innerHTML = age;
     dataEmail.innerHTML = email;
@@ -52,6 +67,10 @@ const addUser = (event) => {
 
     tableRow.setAttribute('id', `row-${id}`);
     btnDeleteRecord.setAttribute('onclick', `deleteItem(${id})`);
+
+    /**
+     * Empiezo a usar mis elemento y a pintarlos en el HTML
+     */
     tblUsers.append(tableRow);
     tableRow.append(dataName);
     tableRow.append(dataAge);
@@ -60,7 +79,13 @@ const addUser = (event) => {
     tableRow.append(dataCodeEditor);
     tableRow.append(btnDeleteRecord);
 
+    /**
+     * LOCAL STORAGE
+     */
 
+    /**
+     * Genero un objeto con mis datos
+     */
     user = {
         id: id,
         name: name,
@@ -124,6 +149,9 @@ const printUsers = () => {
 
 const deleteItem = (id) => {
 
+    /**
+     * Elimino la fila
+     */
     const itemToDelete = document.getElementById(`row-${id}`);
 
     itemToDelete.remove();
